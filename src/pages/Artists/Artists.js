@@ -13,30 +13,30 @@ const db = firebase.firestore(firebase);
 export default function Artists() {
   const [artists, setArtists] = useState([]);
 
-  // useEffect(() => {
-  //   db.collection("artists")
-  //     .get()
-  //     .then((d) => {
-  //       const arrayArtist = [];
-  //       map(d?.docs, (artist) => {
-  //         const data = artist.data();
-  //         data.id = artist.id;
-  //         arrayArtist.push(data);
-  //       });
-  //       setArtists(arrayArtist);
-  //     })
-  //     .catch((err) => alertErrors(err?.code));
-  // }, []);
+  useEffect(() => {
+    db.collection("artists")
+      .get()
+      .then((d) => {
+        const arrayArtist = [];
+        map(d?.docs, (artist) => {
+          const data = artist.data();
+          data.id = artist.id;
+          arrayArtist.push(data);
+        });
+        setArtists(arrayArtist);
+      })
+      .catch((err) => alertErrors(err?.code));
+  }, []);
   return (
     <div className="artists">
       <h1>Artistas</h1>
-      {/* <Grid>
+      <Grid>
         {map(artists, (a) => (
           <Grid.Column key={a.id} mobile={8} tablet={4} computer={3}>
             <RenderArtist key={a.id} artist={a} />
           </Grid.Column>
         ))}
-      </Grid> */}
+      </Grid>
     </div>
   );
 }
@@ -57,7 +57,7 @@ function RenderArtist(props) {
   }, [artist]);
   return (
     <Link to={`/artist/${artist.id}`}>
-      <div className="artist__item">
+      <div className="artists__item">
         <div
           className="avatar"
           style={{ backgroundImage: `url('${bannerUrl}')` }}
