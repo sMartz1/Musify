@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, GridColumn } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import Routes from "../../routes/Routes";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./LoggedLayout.scss";

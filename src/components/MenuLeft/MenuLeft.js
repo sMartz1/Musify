@@ -4,6 +4,7 @@ import { Menu, Icon } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 import { isUserAdmin } from "../../utils/Api";
 import AddArtistForm from "../Artists/AddArtistForm";
+import AddAlbumForm from "../Albums/AddAlbumForm";
 
 import BasicModal from "../Modal/BasicModal";
 
@@ -28,6 +29,11 @@ function MenuLeft(props) {
       case "artist":
         setTitleModal("Nuevo artista");
         setContentModal(<AddArtistForm setShowModal={setShowModal} />);
+        setShowModal(true);
+        break;
+      case "album":
+        setTitleModal("Nuevo album");
+        setContentModal(<AddAlbumForm setShowModal={setShowModal} />);
         setShowModal(true);
         break;
       case "song":
@@ -78,6 +84,10 @@ function MenuLeft(props) {
             <Menu.Item onClick={() => handlerModal("song")}>
               <Icon name="plus square outline" />
               Nueva Canción
+            </Menu.Item>
+            <Menu.Item onClick={() => handlerModal("album")}>
+              <Icon name="plus square outline" />
+              Nuevo Album
             </Menu.Item>
             <Menu.Item onClick={() => handlerModal("artist")}>
               <Icon name="plus square outline" />
