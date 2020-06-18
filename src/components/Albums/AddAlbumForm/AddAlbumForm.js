@@ -4,8 +4,10 @@ import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import alertErrors from "../../../utils/AlertErrors";
 import { map } from "lodash";
+import { v4 as uuidGenerator } from "uuid";
 import firebase from "../../../utils/firebase";
 import "firebase/firestore";
+import "firebase/storage";
 import noAvatar from "../../../assets/no-image.png";
 
 import "./AddAlbumForm.scss";
@@ -34,6 +36,11 @@ export default function AddAlbumForm(props) {
       })
       .catch((err) => alertErrors(err?.code));
   }, []);
+
+  const uploadImage = (nameF) => {
+    const ref = firebase.storage().ref().child(`album/${nameF}`);
+    return ref.put(file);
+  };
   const onDrop = useCallback((acceptedFile) => {
     const file = acceptedFile[0];
     setFile(file);
@@ -47,16 +54,49 @@ export default function AddAlbumForm(props) {
   });
 
   const onSubmit = () => {
-    if (!formData.name) {
-      toast.warning("Añade el nombre del artista");
+    if (!formData.name || !formData.artist) {
+      toast.warning("El nombre del album y el artista son obligatorios");
     } else if (!file) {
-      toast.warning("Añade una imagen para el artista");
+      toast.warning("Añade una imagen para el album");
+    } else {
+      setIsLoading(true);
+      const fileName = uuidGenerator();
+      uploadImage(fileName)
+        .then(() => {
+          db.collection("albums")
+            .add({
+              name: formData.name,
+              artist: formData.artist,
+              banner: fileName,
+            })
+            .then(() => {
+              toast.success("Se ha subido el nuevo album correctamente.");
+              resetForm();
+
+              setIsLoading(false);
+              setShowModal(false);
+            })
+            .catch((err) => {
+              alertErrors(err?.code);
+              setIsLoading(false);
+            });
+        })
+        .catch((err) => {
+          alertErrors(err?.code);
+          setIsLoading(false);
+        });
     }
+  };
+
+  const resetForm = () => {
+    setFormData(initialValueForm());
+    setFile(null);
+    setAlbumAvatar(null);
   };
   return (
     <Form className="add-album-form" onSubmit={onSubmit}>
       <Form.Group>
-        <Form.Field className="album-avatar">
+        <Form.Field className="album-avatar" width={5}>
           <div
             {...getRootProps()}
             className="avatar"
@@ -68,7 +108,7 @@ export default function AddAlbumForm(props) {
             {!albumAvatar && <Image src={noAvatar} />}
           </div>
         </Form.Field>
-        <Form.Field className="album-inputs">
+        <Form.Field className="album-inputs" width={11}>
           <Input
             placeholder="Nombre del album"
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
