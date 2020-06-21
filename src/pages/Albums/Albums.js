@@ -60,7 +60,7 @@ function Album(props) {
       .catch((err) => alertErrors(err?.code));
   }, [album]);
   return (
-    <Link to={`/artist/${album.id}`}>
+    <Link to={`/album/${album.id}`}>
       <div className="albums__item">
         <div
           className="avatar"

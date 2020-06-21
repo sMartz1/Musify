@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
+
 import "./MenuLeft.scss";
 import { Menu, Icon } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 import { isUserAdmin } from "../../utils/Api";
 import AddArtistForm from "../Artists/AddArtistForm";
 import AddAlbumForm from "../Albums/AddAlbumForm";
+import AddSongForm from "../Songs/AddSongForm";
 
 import BasicModal from "../Modal/BasicModal";
+
+const electron = require("electron");
+const remote = electron.remote;
 
 function MenuLeft(props) {
   const { user, location } = props;
@@ -24,6 +29,12 @@ function MenuLeft(props) {
     setActiveMenu(menu.to);
   };
 
+  function quitApplication() {
+    if (process.platform !== "darwin") {
+      remote.app.exit();
+    }
+  }
+
   const handlerModal = (type) => {
     switch (type) {
       case "artist":
@@ -38,7 +49,7 @@ function MenuLeft(props) {
         break;
       case "song":
         setTitleModal("Nueva canción");
-        setContentModal(<h2>formulario nueva canción</h2>);
+        setContentModal(<AddSongForm setShowModal={setShowModal} />);
         setShowModal(true);
         break;
 
@@ -60,6 +71,11 @@ function MenuLeft(props) {
     <>
       <Menu className="menu-left" vertical>
         <div className="top">
+          <Icon
+            name="close"
+            className="close-window-main"
+            onClick={quitApplication}
+          />
           <Menu.Item
             as={Link}
             to="/"

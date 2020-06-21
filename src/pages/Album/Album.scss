@@ -1,3 +1,32 @@
 @import "../../scss/index.scss";
 .album {
+  margin: 50px;
+
+  &__header {
+    display: flex;
+
+    .image {
+      width: 200px;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .info {
+      margin-left: 20px;
+      h1 {
+        font-size: 35px;
+      }
+      p {
+        a {
+          color: $font-light;
+        }
+      }
+    }
+  }
+
+  &__songs {
+    margin-top: 40px;
+  }
 }

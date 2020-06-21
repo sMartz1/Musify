@@ -13,13 +13,13 @@ export default function BasicSliderItems(props) {
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 6,
+    slidesToShow: size(data) > 6 ? 6 : size(data),
     slidesToScroll: 1,
     centerMode: true,
     className: "basic-slider-items__list",
   };
 
-  if (size(data) < 5) {
+  if (size(data) < 1) {
     return null;
   }
   return (

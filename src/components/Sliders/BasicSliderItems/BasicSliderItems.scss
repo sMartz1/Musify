@@ -23,9 +23,14 @@
       .avatar {
         height: 160px;
         width: 100%;
+        max-width: 150px;
+        min-width: 100px;
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
+      }
+      h3 {
+        color: $font-grey;
       }
     }
   }

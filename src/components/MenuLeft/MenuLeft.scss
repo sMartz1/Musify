@@ -9,6 +9,16 @@
   width: 100%;
   padding-top: 50px;
 
+  .close-window-main {
+    position: absolute;
+    margin-top: -35px;
+    padding-left: 15px;
+
+    &:hover {
+      color: red;
+    }
+  }
+
   .item,
   a.item {
     color: $font-grey;
