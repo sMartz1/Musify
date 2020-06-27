@@ -10,8 +10,7 @@ import AddSongForm from "../Songs/AddSongForm";
 
 import BasicModal from "../Modal/BasicModal";
 
-const electron = require("electron");
-const remote = electron.remote;
+
 
 function MenuLeft(props) {
   const { user, location } = props;
@@ -29,11 +28,7 @@ function MenuLeft(props) {
     setActiveMenu(menu.to);
   };
 
-  function quitApplication() {
-    if (process.platform !== "darwin") {
-      remote.app.exit();
-    }
-  }
+
 
   const handlerModal = (type) => {
     switch (type) {
@@ -63,6 +58,8 @@ function MenuLeft(props) {
 
   useEffect(() => {
     isUserAdmin(user.uid).then((r) => {
+      
+      
       setUserAdmin(r);
     });
   }, [user]);
@@ -71,11 +68,7 @@ function MenuLeft(props) {
     <>
       <Menu className="menu-left" vertical>
         <div className="top">
-          <Icon
-            name="close"
-            className="close-window-main"
-            onClick={quitApplication}
-          />
+          
           <Menu.Item
             as={Link}
             to="/"

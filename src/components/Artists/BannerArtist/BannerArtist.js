@@ -17,7 +17,7 @@ export default function BannerArtist(props) {
         setBannerUrl(d);
       })
       .catch((err) => alertErrors(err?.code));
-  }, []);
+  }, [artist]);
   return (
     <div
       className="banner-artist"
