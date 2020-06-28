@@ -1,5 +1,7 @@
 const electron = require("electron");
 
+
+
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
@@ -15,6 +17,7 @@ function createWindow() {
     resizable: false,
     title: "Musify",
     // frame: false,
+    webPreferences: {     nodeIntegration: true   }
   });
   mainWindow.loadURL(
     isDev

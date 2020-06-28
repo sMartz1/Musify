@@ -12,6 +12,7 @@ import BasicModal from "../Modal/BasicModal";
 
 
 
+
 function MenuLeft(props) {
   const { user, location } = props;
   const [activeMenu, setActiveMenu] = useState(location.pathname);
@@ -19,6 +20,7 @@ function MenuLeft(props) {
   const [showModal, setShowModal] = useState(false);
   const [titleModal, setTitleModal] = useState(null);
   const [contentModal, setContentModal] = useState(null);
+  const electron = window.require('electron')
 
   useEffect(() => {
     setActiveMenu(location.pathname);
@@ -64,11 +66,22 @@ function MenuLeft(props) {
     });
   }, [user]);
 
+  const closeApp = ()=>{
+    electron.remote.getCurrentWindow().close();
+  }
+
   return (
     <>
       <Menu className="menu-left" vertical>
         <div className="top">
-          
+        <Menu.Item
+            
+            name="home"
+            
+            onClick={closeApp}
+          >
+            <Icon name="close" /> Cerrar
+          </Menu.Item>
           <Menu.Item
             as={Link}
             to="/"
